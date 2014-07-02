@@ -1,0 +1,27 @@
+{
+  "name": "jsdoc3-parser",
+  "version": "0.0.0",
+  "description": "Get the AST of a file using JSDoc3's parser",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mrjoelkemp/jsdoc3-parser.git"
+  },
+  "keywords": [
+    "jsdoc",
+    "parser",
+    "ast"
+  ],
+  "author": "Joel Kemp <joel@mrjoelkemp.com> (http://www.mrjoelkemp.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mrjoelkemp/jsdoc3-parser/issues"
+  },
+  "homepage": "https://github.com/mrjoelkemp/jsdoc3-parser",
+  "dependencies": {
+    "jsdoc": "^3.3.0-alpha9"
+  }
+}
