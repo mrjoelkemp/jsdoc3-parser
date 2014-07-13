@@ -11,7 +11,7 @@ module.exports = function (filename, cb) {
   // We can't require.resolve('jsdoc')
   var cmd = __dirname + '/node_modules/jsdoc/jsdoc.js -X ' + filename;
 
-  exec(cmd, function (error, stdout) {
+  exec(cmd, { maxBuffer: 400 * 1024 }, function (error, stdout) {
     cb(error, JSON.parse(stdout));
   });
 };
