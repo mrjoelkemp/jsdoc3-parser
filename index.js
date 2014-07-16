@@ -1,4 +1,6 @@
-var exec = require('child_process').exec;
+var execFile = require('child_process').execFile,
+    path = require('path'),
+    win32 = require('os').platform() === 'win32'
 
 /**
  * Parses the given file using JSDoc's parser.
@@ -9,9 +11,10 @@ var exec = require('child_process').exec;
  */
 module.exports = function (filename, cb) {
   // We can't require.resolve('jsdoc')
-  var cmd = __dirname + '/node_modules/jsdoc/jsdoc.js -X ' + filename;
+  // since jsdoc exposes jsdoc & jsdoc.cmd to .bin folder we can use them on any platform
+  var cmd = path.join(__dirname, 'node_modules', '.bin', win32 ? 'jsdoc.cmd' : 'jsdoc');
 
-  exec(cmd, { maxBuffer: 5120 * 1024 }, function (error, stdout) {
+  execFile(cmd, ['-X', filename], { maxBuffer: 5120 * 1024 }, function (error, stdout) {
     cb(error, JSON.parse(stdout));
   });
 };
