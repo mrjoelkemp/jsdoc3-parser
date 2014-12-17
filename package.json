@@ -1,6 +1,6 @@
 {
   "name": "jsdoc3-parser",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Get the AST of a file using JSDoc3's parser",
   "main": "index.js",
   "scripts": {
@@ -22,6 +22,6 @@
   },
   "homepage": "https://github.com/mrjoelkemp/jsdoc3-parser",
   "dependencies": {
-    "jsdoc": "^3.3.0-alpha9"
+    "jsdoc": "^3.3.0-alpha11"
   }
 }
