@@ -15,6 +15,14 @@ module.exports = function (filename, cb) {
   var cmd = path.join(__dirname, 'node_modules', '.bin', win32 ? 'jsdoc.cmd' : 'jsdoc');
 
   execFile(cmd, ['-X', filename], { maxBuffer: 5120 * 1024 }, function (error, stdout) {
-    cb(error, JSON.parse(stdout));
+    var parsed;
+  	try {
+  		parsed = JSON.parse(stdout);
+  	} catch (ex){
+  		console.error('Error on', filename, ex);
+  		parsed = null;
+  		error = ex;
+  	}
+  	cb(error, parsed);
   });
 };
