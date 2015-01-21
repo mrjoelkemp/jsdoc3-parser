@@ -16,6 +16,8 @@ module.exports = function (filename, cb) {
 
   execFile(cmd, ['-X', filename], { maxBuffer: 5120 * 1024 }, function (error, stdout) {
     var parsed;
+    if(error) {return cb(error, null);}
+
   	try {
   		parsed = JSON.parse(stdout);
   	} catch (ex){
