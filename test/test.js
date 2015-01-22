@@ -10,9 +10,10 @@ describe('jsdoc3-parser', function() {
     });
   });
 
-  it('propagates errors from jsdoc', function(done) {
+  it('propagates errors from the cli', function(done) {
     parser(__dirname + '/error.js', function(err, ast) {
       assert.ok(err);
+      assert.ok(!ast);
       done();
     });
   });

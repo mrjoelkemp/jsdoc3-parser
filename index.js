@@ -26,6 +26,11 @@ function jsdocParser(filename, cb) {
  * @param  {String}   stdout
  */
 jsdocParser._onComplete = function(cb, error, stdout) {
+  if (error) {
+    cb(error, null);
+    return;
+  }
+
   var parsed;
 
   try {
