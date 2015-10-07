@@ -1,20 +1,55 @@
 var execFile = require('child_process').execFile,
-    path = require('path'),
-    win32 = require('os').platform() === 'win32';
+    fs = require('fs'),
+    os = require('os'),
+    path = require('path');
+
+/**
+ * Locates the JSDoc executable command.  Since a module is not provided,
+ * `require.resolve('jsdoc')` does not work and must be done manually.
+ *
+ * @param {String}  dir The starting directory to search.
+ * @return {String} The executable path, or null if not found.
+ */
+function locateJSDocCommand(dir) {
+  var executable = os.platform() === 'win32' ? 'jsdoc.cmd' : 'jsdoc',
+      cmd;
+  dir = path.resolve(dir);
+  while (dir) {
+    try {
+      cmd = path.join(dir, 'node_modules', '.bin', executable);
+      // End the search if the command is found.
+      // If not found, an exception is thrown.
+      fs.statSync(cmd);
+      break;
+    } catch (ex) {
+      cmd = null;
+      // Otherwise, iterate to the parent directory, if possible.
+      if (path.dirname(dir) == dir) {
+        dir = null;
+      } else {
+        dir = path.resolve(path.dirname(dir));
+      }
+    }
+  }
+  return cmd;
+}
 
 /**
  * Parses the given file using JSDoc's parser.
- * Since JSDoc doesn't isn't require-able, we need to get the parse info from the command line.
+ * Since JSDoc doesn't isn't require-able, we need to get the parse info from
+ * the command line.
  *
  * @param  {String}   filename
  * @param  {Function} cb       ({Object}) -> null - Executed with the AST
  */
 function jsdocParser(filename, cb) {
-  // We can't require.resolve('jsdoc')
-  // since jsdoc exposes jsdoc & jsdoc.cmd to .bin folder we can use them on any platform
-  var cmd = path.join(__dirname, 'node_modules', '.bin', win32 ? 'jsdoc.cmd' : 'jsdoc');
-
-  execFile(cmd, ['-X', filename], { maxBuffer: 5120 * 1024 }, jsdocParser._onComplete.bind(null, cb));
+  var cmd = locateJSDocCommand(__dirname);
+  if (!cmd) {
+    cb(new Error('Could not find jsdoc command.'), null);
+    return;
+  }
+  execFile(cmd, ['-X', filename], {maxBuffer: 5120 * 1024},
+           jsdocParser._onComplete.bind(null, cb));
 }
 
 /**
