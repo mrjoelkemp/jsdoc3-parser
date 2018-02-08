@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/mrjoelkemp/jsdoc3-parser",
   "dependencies": {
-    "jsdoc": "^3.3.0-alpha11"
+    "jsdoc": "^3.5.5"
   },
   "devDependencies": {
     "jscs": "~1.10.0",
