@@ -4,7 +4,7 @@
   "description": "Get the AST of a file using JSDoc3's parser",
   "main": "index.js",
   "scripts": {
-    "test": "jscs -p airbnb index.js test/test.js && mocha test/test.js"
+    "test": "mocha test/test.js"
   },
   "repository": {
     "type": "git",
@@ -25,7 +25,6 @@
     "jsdoc": "^4.0.0"
   },
   "devDependencies": {
-    "jscs": "~1.10.0",
     "mocha": "~2.1.0"
   }
 }
